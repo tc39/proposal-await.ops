@@ -4,20 +4,67 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/github.min.css">
 <script src="./spec.js"></script>
 <pre class="metadata">
-title: Proposal Title Goes Here
-stage: -1
-contributors: Your Name(s) Here
+title: Proposal await.ops
+stage: 0
+contributors: "Jack Works"
 </pre>
 
-<emu-clause id="sec-demo-clause">
-  <h1>This is an emu-clause</h1>
-  <p>This is an algorithm:</p>
-  <emu-alg>
-    1. Let _proposal_ be *undefined*.
-    1. If IsAccepted(_proposal_),
-      1. Let _stage_ be *0*.
-    1. Else,
-      1. Let _stage_ be *-1*.
-    1. Return ? ToString(_proposal_).
-  </emu-alg>
-</emu-clause>
+<h1>12.5 Unary operations</h1>
+<h2>Syntax</h2>
+<emu-production name="UnaryExpression"  params="Yield, Await">
+  <emu-rhs>
+    <emu-rhs constraints="+Await"><emu-nt params="?Yield">AwaitExpression</emu-nt></emu-rhs>
+  </emu-rhs>
+  <ins style="padding-left: 75px;">
+    <emu-rhs constraints="+Await"><emu-nt params="?Yield">AwaitOpsExpression</emu-nt></emu-rhs>
+  </ins>
+</emu-production>
+<h1>14.7 Async Function Definitions</h1>
+<h2>Syntax</h2>
+<emu-production name="AwaitOpsExpression"  params="Yield">
+  <emu-rhs constraints="+Await">await.all <emu-nt params="?Yield, +Await">UnaryExpression</emu-nt></emu-rhs>
+  <emu-rhs constraints="+Await">await.race <emu-nt params="?Yield, +Await">UnaryExpression</emu-nt></emu-rhs>
+  <emu-rhs constraints="+Await">await.allSettled <emu-nt params="?Yield, +Await">UnaryExpression</emu-nt></emu-rhs>
+  <emu-rhs constraints="+Await">await.any <emu-nt params="?Yield, +Await">UnaryExpression</emu-nt></emu-rhs>
+</emu-production>
+<h3>14.7.14 Runtime Semantics: Evaluation</h3>
+<emu-grammar>
+  AwaitOpsExpression : `await.all` UnaryExpression
+</emu-grammar>
+<emu-alg>
+  1. Let _exprRef_ be the result of evaluating |UnaryExpression|.
+  1. Let _value_ be ? GetValue(_exprRef_).
+  1. Let _f_ be the current Realm Record's built-in <emu-xref href="#sec-promise.all" title></emu-xref> function.
+  1. Let _pendingPromise_ be Call(_f_, *undefined*, _value_)
+  1. Return ? Await(_pendingPromise_).
+</emu-alg>
+<emu-grammar>
+  AwaitOpsExpression : `await.race` UnaryExpression
+</emu-grammar>
+<emu-alg>
+  1. Let _exprRef_ be the result of evaluating |UnaryExpression|.
+  1. Let _value_ be ? GetValue(_exprRef_).
+  1. Let _f_ be the current Realm Record's built-in <emu-xref href="#sec-promise.race" title></emu-xref> function.
+  1. Let _pendingPromise_ be Call(_f_, *undefined*, _value_)
+  1. Return ? Await(_pendingPromise_).
+</emu-alg>
+<emu-grammar>
+  AwaitOpsExpression : `await.allSettled` UnaryExpression
+</emu-grammar>
+<emu-alg>
+  1. Let _exprRef_ be the result of evaluating |UnaryExpression|.
+  1. Let _value_ be ? GetValue(_exprRef_).
+  1. Let _f_ be the current Realm Record's built-in <emu-xref href="#sec-promise.allSettled" title>Promise.allSettled( iterable )</emu-xref> function.
+  1. Let _pendingPromise_ be Call(_f_, *undefined*, _value_)
+  1. Return ? Await(_pendingPromise_).
+</emu-alg>
+<emu-grammar>
+  AwaitOpsExpression : `await.any` UnaryExpression
+</emu-grammar>
+<emu-alg>
+  1. Let _exprRef_ be the result of evaluating |UnaryExpression|.
+  1. Let _value_ be ? GetValue(_exprRef_).
+  1. Let _f_ be the current Realm Record's built-in <emu-xref href="#sec-promise.any" title>Promise.any( iterable )</emu-xref> function.
+  1. Let _pendingPromise_ be Call(_f_, *undefined*, _value_)
+  1. Return ? Await(_pendingPromise_).
+</emu-alg>
