@@ -65,6 +65,6 @@ contributors: "Jack Works"
   1. Let _exprRef_ be the result of evaluating |UnaryExpression|.
   1. Let _value_ be ? GetValue(_exprRef_).
   1. Let _f_ be the current Realm Record's built-in <emu-xref href="#sec-promise.any" title>Promise.any( iterable )</emu-xref> function.
-  1. Let _pendingPromise_ be > Call(_f_, *undefined*, [_value_])
+  1. Let _pendingPromise_ be ? Call(_f_, *undefined*, [_value_])
   1. Return ? Await(_pendingPromise_).
 </emu-alg>
