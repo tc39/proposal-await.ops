@@ -1,5 +1,7 @@
 # await.ops proposal
 
+The [rendered spec text](https://jack-works.github.io/proposal-await.ops/).
+
 Introduce await.all / await.race / await.allSettled / await.any to simplify the usage of Promises
 
 -   Stage: 0
