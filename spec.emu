@@ -9,28 +9,6 @@ stage: 0
 contributors: "Jack Works"
 </pre>
 
-<emu-clause id="sec-ecmascript-language-expressions">
-  <h1>ECMAScript Language: Expressions</h1>
-
-  <emu-clause id="sec-unary-operators">
-    <h1>Unary Operators</h1>
-    <h2>Syntax</h2>
-    <emu-grammar type="definition">
-      UnaryExpression[Yield, Await] :
-        UpdateExpression[?Yield, ?Await]
-        `delete` UnaryExpression[?Yield, ?Await]
-        `void` UnaryExpression[?Yield, ?Await]
-        `typeof` UnaryExpression[?Yield, ?Await]
-        `+` UnaryExpression[?Yield, ?Await]
-        `-` UnaryExpression[?Yield, ?Await]
-        `~` UnaryExpression[?Yield, ?Await]
-        `!` UnaryExpression[?Yield, ?Await]
-        [+Await] AwaitExpression[?Yield]
-        <ins>[+Await] AwaitOpsExpression[?Yield]</ins>
-    </emu-grammar>
-  </emu-clause>
-</emu-clause>
-
 <emu-clause id="sec-ecmascript-language-functions-and-classes">
   <h1>ECMAScript Language: Functions and Classes</h1>
 
@@ -38,17 +16,20 @@ contributors: "Jack Works"
     <h1>Async Function Definitions</h1>
     <h2>Syntax</h2>
     <emu-grammar type="definition">
-      AwaitOpsExpression[Yield] :
+      AwaitExpression[Yield] :
+        `await` UnaryExpression[?Yield, +Await]
+        <ins>
         `await.all` UnaryExpression[?Yield, +Await]
         `await.allSettled` UnaryExpression[?Yield, +Await]
         `await.any` UnaryExpression[?Yield, +Await]
         `await.race` UnaryExpression[?Yield, +Await]
+        </ins>
     </emu-grammar>
 
     <emu-clause id="sec-async-function-definitions-runtime-semantics-evaluation">
       <h1>Runtime Semantics: Evaluation</h1>
       <emu-grammar>
-        AwaitOpsExpression : `await.all` UnaryExpression
+        AwaitExpression : `await.all` UnaryExpression
       </emu-grammar>
       <emu-alg>
         1. Let _exprRef_ be the result of evaluating |UnaryExpression|.
@@ -58,7 +39,7 @@ contributors: "Jack Works"
       </emu-alg>
 
       <emu-grammar>
-        AwaitOpsExpression : `await.allSettled` UnaryExpression
+        AwaitExpression : `await.allSettled` UnaryExpression
       </emu-grammar>
       <emu-alg>
         1. Let _exprRef_ be the result of evaluating |UnaryExpression|.
@@ -68,7 +49,7 @@ contributors: "Jack Works"
       </emu-alg>
 
       <emu-grammar>
-        AwaitOpsExpression : `await.any` UnaryExpression
+        AwaitExpression : `await.any` UnaryExpression
       </emu-grammar>
       <emu-alg>
         1. Let _exprRef_ be the result of evaluating |UnaryExpression|.
@@ -78,7 +59,7 @@ contributors: "Jack Works"
       </emu-alg>
 
       <emu-grammar>
-        AwaitOpsExpression : `await.race` UnaryExpression
+        AwaitExpression : `await.race` UnaryExpression
       </emu-grammar>
       <emu-alg>
         1. Let _exprRef_ be the result of evaluating |UnaryExpression|.
