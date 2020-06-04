@@ -9,62 +9,83 @@ stage: 0
 contributors: "Jack Works"
 </pre>
 
-<h1>12.5 Unary operations</h1>
-<h2>Syntax</h2>
-<emu-production name="UnaryExpression"  params="Yield, Await">
-  <emu-rhs>
-    <emu-rhs constraints="+Await"><emu-nt params="?Yield">AwaitExpression</emu-nt></emu-rhs>
-  </emu-rhs>
-  <ins style="padding-left: 75px;">
-    <emu-rhs constraints="+Await"><emu-nt params="?Yield">AwaitOpsExpression</emu-nt></emu-rhs>
-  </ins>
-</emu-production>
-<h1>14.7 Async Function Definitions</h1>
-<h2>Syntax</h2>
-<emu-production name="AwaitOpsExpression"  params="Yield">
-  <emu-rhs constraints="+Await">await.all <emu-nt params="?Yield, +Await">UnaryExpression</emu-nt></emu-rhs>
-  <emu-rhs constraints="+Await">await.race <emu-nt params="?Yield, +Await">UnaryExpression</emu-nt></emu-rhs>
-  <emu-rhs constraints="+Await">await.allSettled <emu-nt params="?Yield, +Await">UnaryExpression</emu-nt></emu-rhs>
-  <emu-rhs constraints="+Await">await.any <emu-nt params="?Yield, +Await">UnaryExpression</emu-nt></emu-rhs>
-</emu-production>
-<h3>14.7.14 Runtime Semantics: Evaluation</h3>
-<emu-grammar>
-  AwaitOpsExpression : `await.all` UnaryExpression
-</emu-grammar>
-<emu-alg>
-  1. Let _exprRef_ be the result of evaluating |UnaryExpression|.
-  1. Let _value_ be ? GetValue(_exprRef_).
-  1. Let _f_ be the current Realm Record's built-in <emu-xref href="#sec-promise.all" title></emu-xref> function.
-  1. Let _pendingPromise_ be ? Call(_f_, %Promise%, [_value_])
-  1. Return ? Await(_pendingPromise_).
-</emu-alg>
-<emu-grammar>
-  AwaitOpsExpression : `await.race` UnaryExpression
-</emu-grammar>
-<emu-alg>
-  1. Let _exprRef_ be the result of evaluating |UnaryExpression|.
-  1. Let _value_ be ? GetValue(_exprRef_).
-  1. Let _f_ be the current Realm Record's built-in <emu-xref href="#sec-promise.race" title></emu-xref> function.
-  1. Let _pendingPromise_ be ? Call(_f_, %Promise%, [_value_])
-  1. Return ? Await(_pendingPromise_).
-</emu-alg>
-<emu-grammar>
-  AwaitOpsExpression : `await.allSettled` UnaryExpression
-</emu-grammar>
-<emu-alg>
-  1. Let _exprRef_ be the result of evaluating |UnaryExpression|.
-  1. Let _value_ be ? GetValue(_exprRef_).
-  1. Let _f_ be the current Realm Record's built-in <emu-xref href="#sec-promise.allSettled" title>Promise.allSettled( iterable )</emu-xref> function.
-  1. Let _pendingPromise_ be ? Call(_f_, %Promise%, [_value_])
-  1. Return ? Await(_pendingPromise_).
-</emu-alg>
-<emu-grammar>
-  AwaitOpsExpression : `await.any` UnaryExpression
-</emu-grammar>
-<emu-alg>
-  1. Let _exprRef_ be the result of evaluating |UnaryExpression|.
-  1. Let _value_ be ? GetValue(_exprRef_).
-  1. Let _f_ be the current Realm Record's built-in <emu-xref href="#sec-promise.any" title>Promise.any( iterable )</emu-xref> function.
-  1. Let _pendingPromise_ be ? Call(_f_, %Promise%, [_value_])
-  1. Return ? Await(_pendingPromise_).
-</emu-alg>
+<emu-clause id="sec-ecmascript-language-expressions">
+  <h1>ECMAScript Language: Expressions</h1>
+
+  <emu-clause id="sec-unary-operators">
+    <h1>Unary Operators</h1>
+    <h2>Syntax</h2>
+    <emu-grammar type="definition">
+      UnaryExpression[Yield, Await] :
+        UpdateExpression[?Yield, ?Await]
+        `delete` UnaryExpression[?Yield, ?Await]
+        `void` UnaryExpression[?Yield, ?Await]
+        `typeof` UnaryExpression[?Yield, ?Await]
+        `+` UnaryExpression[?Yield, ?Await]
+        `-` UnaryExpression[?Yield, ?Await]
+        `~` UnaryExpression[?Yield, ?Await]
+        `!` UnaryExpression[?Yield, ?Await]
+        [+Await] AwaitExpression[?Yield]
+        <ins>[+Await] AwaitOpsExpression[?Yield]</ins>
+    </emu-grammar>
+  </emu-clause>
+</emu-clause>
+
+<emu-clause id="sec-ecmascript-language-functions-and-classes">
+  <h1>ECMAScript Language: Functions and Classes</h1>
+
+  <emu-clause id="sec-async-function-definitions">
+    <h1>Async Function Definitions</h1>
+    <h2>Syntax</h2>
+    <emu-grammar type="definition">
+      AwaitOpsExpression[Yield] :
+        `await.all` UnaryExpression[?Yield, +Await]
+        `await.allSettled` UnaryExpression[?Yield, +Await]
+        `await.any` UnaryExpression[?Yield, +Await]
+        `await.race` UnaryExpression[?Yield, +Await]
+    </emu-grammar>
+
+    <emu-clause id="sec-async-function-definitions-runtime-semantics-evaluation">
+      <h1>Runtime Semantics: Evaluation</h1>
+      <emu-grammar>
+        AwaitOpsExpression : `await.all` UnaryExpression
+      </emu-grammar>
+      <emu-alg>
+        1. Let _exprRef_ be the result of evaluating |UnaryExpression|.
+        1. Let _value_ be ? GetValue(_exprRef_).
+        1. Let _pendingPromise_ be ? Call(%Promise.all%, %Promise%, [_value_])
+        1. Return ? Await(_pendingPromise_).
+      </emu-alg>
+
+      <emu-grammar>
+        AwaitOpsExpression : `await.allSettled` UnaryExpression
+      </emu-grammar>
+      <emu-alg>
+        1. Let _exprRef_ be the result of evaluating |UnaryExpression|.
+        1. Let _value_ be ? GetValue(_exprRef_).
+        1. Let _pendingPromise_ be ? Call(%Promise.allSettled%, %Promise%, [_value_])
+        1. Return ? Await(_pendingPromise_).
+      </emu-alg>
+
+      <emu-grammar>
+        AwaitOpsExpression : `await.any` UnaryExpression
+      </emu-grammar>
+      <emu-alg>
+        1. Let _exprRef_ be the result of evaluating |UnaryExpression|.
+        1. Let _value_ be ? GetValue(_exprRef_).
+        1. Let _pendingPromise_ be ? Call(%Promise.any%, %Promise%, [_value_])
+        1. Return ? Await(_pendingPromise_).
+      </emu-alg>
+
+      <emu-grammar>
+        AwaitOpsExpression : `await.race` UnaryExpression
+      </emu-grammar>
+      <emu-alg>
+        1. Let _exprRef_ be the result of evaluating |UnaryExpression|.
+        1. Let _value_ be ? GetValue(_exprRef_).
+        1. Let _pendingPromise_ be ? Call(%Promise.race%, %Promise%, [_value_])
+        1. Return ? Await(_pendingPromise_).
+      </emu-alg>
+    </emu-clause>
+  </emu-clause>
+</emu-clause>
