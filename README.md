@@ -1,6 +1,6 @@
 # await.ops proposal
 
-The [rendered spec text](https://jack-works.github.io/proposal-await.ops/). [Playground Link](https://www.staging-typescript.org/play?ts=4.0.0-pr-39224-4#code/IYZwngdgxgBAZgV2gFwJYHsIwB4AoCUMA3gFAzkzADuwqyAdMADZMwAMZF1tDATsFACmMANoAFXugC2qEIPq9BIdEwBug3AEZ8AXU7ludRiwDKg5MiaCAJqL0BfIA)
+The [rendered spec text](https://tc39.es/proposal-await.ops/). [Playground Link](https://www.staging-typescript.org/play?ts=4.0.0-pr-39224-4#code/IYZwngdgxgBAZgV2gFwJYHsIwB4AoCUMA3gFAzkzADuwqyAdMADZMwAMZF1tDATsFACmMANoAFXugC2qEIPq9BIdEwBug3AEZ8AXU7ludRiwDKg5MiaCAJqL0BfIA)
 
 Introduce await.all / await.race / await.allSettled / await.any to simplify the usage of Promises
 
