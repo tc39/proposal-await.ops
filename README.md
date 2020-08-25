@@ -4,13 +4,14 @@ The [rendered spec text](https://tc39.es/proposal-await.ops/). [Playground Link]
 
 Introduce await.all / await.race / await.allSettled / await.any to simplify the usage of Promises
 
--   Stage: 0
+Stage: 1
 
--   Champions: [Jack Works](https://github.com/Jack-Works), [Jordan Harband](https://github.com/ljharb)
+Champions: [Jack Works](https://github.com/Jack-Works), [Jordan Harband](https://github.com/ljharb)
 
 ## Motivation
 
-To simplify the usage of Promises. (Previous discussions: https://es.discourse.group/t/allow-awaiting-on-arrays/178/19)
+- To simplify the usage of a set of Promises. (Previous discussions: https://es.discourse.group/t/allow-awaiting-on-arrays/178/19)
+- To simplify the usage of concurrent for loop in async functions.
 
 Usage:
 
