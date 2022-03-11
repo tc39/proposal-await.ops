@@ -10,8 +10,7 @@ Champions: [Jack Works](https://github.com/Jack-Works), [Jordan Harband](https:/
 
 ## Motivation
 
-- To simplify the usage of a set of Promises. (Previous discussions: https://es.discourse.group/t/allow-awaiting-on-arrays/178/19)
-- To simplify the usage of concurrent for loop in async functions.
+To simplify the usage of a set of Promises. (Previous discussions: https://es.discourse.group/t/allow-awaiting-on-arrays/178/19)
 
 Usage:
 
