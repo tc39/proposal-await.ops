@@ -1,8 +1,8 @@
-# await.ops proposal
+# await operation proposal
 
 The [rendered spec text](https://tc39.es/proposal-await.ops/). [Playground Link](https://www.staging-typescript.org/play?ts=4.0.0-pr-39224-4#code/IYZwngdgxgBAZgV2gFwJYHsIwB4AoCUMA3gFAzkzADuwqyAdMADZMwAMZF1tDATsFACmMANoAFXugC2qEIPq9BIdEwBug3AEZ8AXU7ludRiwDKg5MiaCAJqL0BfIA)
 
-Introduce await.all / await.race / await.allSettled / await.any to simplify the usage of Promises
+Introduce await.all / await.race / await.allSettled / await.any to simplify the usage of async functions
 
 Stage: 1
 
@@ -10,7 +10,13 @@ Champions: [Jack Works](https://github.com/Jack-Works), [Jordan Harband](https:/
 
 ## Motivation
 
-To simplify the usage of a set of Promises. (Previous discussions: https://es.discourse.group/t/allow-awaiting-on-arrays/178/19)
+When developers use async functions, they have to know about Promise if they want to handle multiple tasks parallelly (`Promise.all` stuff), this is some kind of "abstraction leak".
+
+This proposal is intended to fix the problem by introducing parallel Promise utils in the async-await style.
+
+## Drafted solution
+
+Introduce new syntax for this:
 
 Usage:
 
@@ -37,3 +43,12 @@ await.allSettled expr
 await.any expr
 // eq: await Promise.any(expr)
 ```
+
+## Alternative solution
+
+Introduce a new global `Async` (or `Await`), then let
+
+- `Async.all` (equals to `Promise.all`)
+- `Async.race` (equals to `Promise.race`)
+- `Async.allSettled` (equals to `Promise.allSettled`)
+- `Async.any` (equals to `Promise.any`)
