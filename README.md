@@ -16,10 +16,6 @@ This proposal is intended to fix the problem by introducing concurrent Promise u
 
 ## Drafted solution
 
-Introduce new syntax for this:
-
-Usage:
-
 ```js
 // before
 await Promise.all(users.map(async x => fetchProfile(x.id)))
@@ -43,12 +39,3 @@ await.allSettled expr
 await.any expr
 // eq: await Promise.any(expr)
 ```
-
-## Alternative solution
-
-Introduce a new global `Async` (or `Await`), then let
-
-- `Async.all` (equals to `Promise.all`)
-- `Async.race` (equals to `Promise.race`)
-- `Async.allSettled` (equals to `Promise.allSettled`)
-- `Async.any` (equals to `Promise.any`)
